@@ -3,280 +3,239 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shubham Mali | SRE & Cloud Architect</title>
+    <title>Shubham Mali | Cloud Engineer</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700&family=Fira+Code:wght@400;500&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=JetBrains+Mono&display=swap');
 
         :root {
-            --neon-blue: #00f2ff;
-            --neon-purple: #bc13fe;
-            --bg-canvas: #030712;
+            --primary: #00d2ff;
+            --secondary: #3a7bd5;
+            --bg-deep: #05070a;
         }
 
         body {
-            background-color: var(--bg-canvas);
-            color: #f8fafc;
-            font-family: 'Outfit', sans-serif;
+            background-color: var(--bg-deep);
+            color: #f1f5f9;
+            font-family: 'Space Grotesk', sans-serif;
             overflow-x: hidden;
         }
 
-        .mono { font-family: 'Fira Code', monospace; }
+        .mono { font-family: 'JetBrains Mono', monospace; }
 
-        /* Animated Grid Background */
-        .bg-grid {
+        /* Advanced Mesh Background */
+        .mesh-gradient {
             position: fixed;
-            inset: 0;
-            background-image: 
-                linear-gradient(to right, rgba(255,255,255,0.05) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(255,255,255,0.05) 1px, transparent 1px);
-            background-size: 50px 50px;
-            mask-image: radial-gradient(circle at center, black, transparent 80%);
-            z-index: -1;
-            animation: grid-move 20s linear infinite;
-        }
-
-        @keyframes grid-move {
-            from { transform: translateY(0); }
-            to { transform: translateY(50px); }
-        }
-
-        /* Cyberpunk Glows */
-        .glow-sphere {
-            position: absolute;
-            width: 400px;
-            height: 400px;
-            background: radial-gradient(circle, rgba(0, 242, 255, 0.15) 0%, transparent 70%);
-            filter: blur(60px);
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at 50% 50%, rgba(58, 123, 213, 0.15) 0%, transparent 50%),
+                        radial-gradient(circle at 10% 90%, rgba(0, 210, 255, 0.1) 0%, transparent 30%);
             z-index: -1;
         }
 
-        /* Advanced Card Styling */
-        .cyber-card {
-            background: rgba(15, 23, 42, 0.8);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            position: relative;
-            overflow: hidden;
-            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+        .glass-card {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        .cyber-card::before {
-            content: "";
-            position: absolute;
-            top: 0; left: -100%;
-            width: 100%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
-            transition: 0.5s;
+        .glass-card:hover {
+            transform: scale(1.02) translateY(-5px);
+            border-color: var(--primary);
+            box-shadow: 0 20px 40px -15px rgba(0, 210, 255, 0.2);
         }
 
-        .cyber-card:hover::before { left: 100%; }
-
-        .cyber-card:hover {
-            border-color: var(--neon-blue);
-            transform: translateY(-10px) scale(1.01);
-            box-shadow: 0 0 30px rgba(0, 242, 255, 0.1);
+        /* Terminal Styling */
+        .terminal-header {
+            background: #1e293b;
+            border-radius: 8px 8px 0 0;
+            padding: 8px 12px;
+            display: flex;
+            gap: 6px;
         }
+        .dot { width: 10px; height: 10px; border-radius: 50%; }
 
-        /* Custom Reveal Animation */
-        .reveal {
-            opacity: 0;
-            transform: translateY(40px);
-            transition: all 1s ease-out;
-        }
+        /* Animation Classes */
+        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
 
-        .reveal.visible {
-            opacity: 1;
-            transform: translateY(0);
+        .shimmer {
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            background-size: 200% 100%;
+            animation: shimmer 3s infinite;
         }
-
-        /* Floating Animation */
-        .float {
-            animation: floating 3s ease-in-out infinite;
-        }
-
-        @keyframes floating {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-15px); }
-        }
+        @keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
     </style>
 </head>
 <body>
 
-    <div class="bg-grid"></div>
-    <div class="glow-sphere top-[-10%] left-[-10%]"></div>
-    <div class="glow-sphere bottom-[-10%] right-[-10%]"></div>
+    <div class="mesh-gradient" id="mesh"></div>
 
-    <nav class="fixed w-full z-50 backdrop-blur-md border-b border-white/10">
-        <div class="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
-            <div class="text-2xl font-black tracking-widest text-white flex items-center">
-                <span class="w-3 h-3 bg-cyan-400 rounded-full mr-3 animate-pulse"></span>
-                SHUBHAM.MALI
-            </div>
-            <div class="hidden md:flex items-center space-x-10 text-xs font-bold uppercase tracking-[0.3em] text-slate-400">
-                <a href="#infra" class="hover:text-cyan-400 transition">Infrastructure</a>
-                <a href="#stack" class="hover:text-cyan-400 transition">Stack</a>
-                <a href="#logs" class="hover:text-cyan-400 transition">Logs</a>
-                <a href="mailto:shubhamx2004s@gmail.com" class="px-5 py-2 border border-cyan-400/50 text-cyan-400 rounded-sm hover:bg-cyan-400 hover:text-black transition duration-500">Deploy Contact</a>
-            </div>
+    <nav class="fixed w-full z-50 px-6 py-4 flex justify-between items-center glass-card border-none rounded-none">
+        <div class="text-2xl font-bold tracking-tighter mono">
+            <span class="text-sky-400">&lt;</span>SM<span class="text-sky-400">/&gt;</span>
+        </div>
+        <div class="hidden md:flex space-x-10 text-sm font-medium uppercase tracking-widest">
+            <a href="#about" class="hover:text-sky-400 transition">Infrastructure</a>
+            <a href="#projects" class="hover:text-sky-400 transition">Deployments</a>
+            <a href="#skills" class="hover:text-sky-400 transition">Stack</a>
+            <a href="mailto:shubhamx2004s@gmail.com" class="text-sky-400 border border-sky-400/30 px-4 py-1 rounded hover:bg-sky-400/10 transition">Ping</a>
         </div>
     </nav>
 
-    <section id="infra" class="min-h-screen flex items-center px-6">
-        <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
-            <div class="reveal">
-                <h2 class="text-cyan-400 mono mb-4 font-medium tracking-tighter">System.out.println("Cloud Architect");</h2>
-                <h1 class="text-6xl md:text-8xl font-bold mb-6 tracking-tight leading-[0.9]">
-                    Scaling the <br><span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-500">Future.</span>
+    <section id="about" class="min-h-screen flex flex-col justify-center items-center px-6 pt-20">
+        <div class="max-w-5xl w-full grid md:grid-cols-2 gap-12 items-center">
+            <div>
+                <div class="inline-block px-3 py-1 rounded-full bg-sky-500/10 border border-sky-500/20 text-sky-400 text-xs font-bold mb-6 mono uppercase tracking-tighter">
+                    Available for SRE & DevOps roles
+                </div>
+                <h1 class="text-6xl md:text-8xl font-bold leading-tight mb-6">
+                    Cloud <br><span class="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 to-indigo-500">Architect.</span>
                 </h1>
-                <p class="text-slate-400 text-lg md:text-xl max-w-lg mb-10 leading-relaxed">
-                    B.E. Computer Engineering student & Cloud Intern specialized in 
-                    <span class="text-white border-b border-cyan-400">Kubernetes GitOps</span> 
-                    and automated infrastructure provisioning.
+                <p class="text-slate-400 text-lg mb-8 max-w-md leading-relaxed">
+                    Engineering scalable, self-healing infrastructure. Expert in AWS provisioning, Kubernetes orchestration, and GitOps automation.
                 </p>
-                <div class="flex flex-wrap gap-4">
-                    <a href="https://github.com/shubhamx18" class="px-8 py-4 bg-white text-black font-bold rounded-full hover:bg-cyan-400 transition duration-300">Explore Repos</a>
-                    <a href="#logs" class="px-8 py-4 glass-card border border-white/20 rounded-full hover:border-cyan-400 transition duration-300">View Experience</a>
-                </div>
-            </div>
-
-            <div class="relative reveal delay-300">
-                <div class="absolute -inset-2 bg-gradient-to-r from-cyan-500 to-purple-600 rounded-xl blur opacity-20 animate-pulse"></div>
-                <div class="relative cyber-card rounded-xl shadow-2xl overflow-hidden">
-                    <div class="bg-slate-800/50 p-3 flex items-center justify-between border-b border-white/5">
-                        <div class="flex space-x-2">
-                            <div class="w-3 h-3 rounded-full bg-red-500/50"></div>
-                            <div class="w-3 h-3 rounded-full bg-yellow-500/50"></div>
-                            <div class="w-3 h-3 rounded-full bg-green-500/50"></div>
-                        </div>
-                        <div class="text-[10px] text-slate-500 mono font-bold tracking-widest uppercase">Kernel Version 5.15.0-aws</div>
+                <div class="flex space-x-4">
+                    <button class="bg-sky-500 hover:bg-sky-400 text-black font-bold px-8 py-4 rounded-lg transition shadow-lg shadow-sky-500/20">
+                        View Logs (Projects)
+                    </button>
+                    <div class="flex items-center space-x-4 ml-6">
+                        <a href="#" class="text-slate-500 hover:text-white transition"><i class="fab fa-github text-2xl"></i></a>
+                        <a href="#" class="text-slate-500 hover:text-white transition"><i class="fab fa-linkedin text-2xl"></i></a>
                     </div>
-                    <div class="p-8 mono text-sm md:text-base min-h-[300px]" id="terminal-body">
-                        </div>
                 </div>
             </div>
-        </div>
-    </section>
 
-    <section id="stack" class="py-32 bg-slate-950/50 relative">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="text-center mb-20 reveal">
-                <h2 class="text-4xl md:text-6xl font-bold mb-4">The Tech Ecosystem</h2>
-                <p class="text-slate-500 mono">Integrated Tools & Automations</p>
-            </div>
-
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-                <div class="cyber-card p-10 rounded-2xl text-center reveal">
-                    <i class="fab fa-aws text-5xl text-orange-400 mb-6 float"></i>
-                    <h3 class="text-xl font-bold mb-2">AWS</h3>
-                    <p class="text-xs text-slate-500 uppercase tracking-widest">S3, EC2, IAM, EKS</p>
+            <div class="glass-card rounded-xl overflow-hidden shadow-2xl">
+                <div class="terminal-header">
+                    <div class="dot bg-red-500"></div>
+                    <div class="dot bg-yellow-500"></div>
+                    <div class="dot bg-green-500"></div>
+                    <span class="text-[10px] text-slate-500 ml-2 mono">shubham-mali — zsh</span>
                 </div>
-                <div class="cyber-card p-10 rounded-2xl text-center reveal">
-                    <i class="fas fa-dharmachakra text-5xl text-blue-400 mb-6 float" style="animation-delay: 0.5s"></i>
-                    <h3 class="text-xl font-bold mb-2">Kubernetes</h3>
-                    <p class="text-xs text-slate-500 uppercase tracking-widest">Helm, GitOps, ArgoCD</p>
-                </div>
-                <div class="cyber-card p-10 rounded-2xl text-center reveal">
-                    <i class="fab fa-docker text-5xl text-sky-400 mb-6 float" style="animation-delay: 1s"></i>
-                    <h3 class="text-xl font-bold mb-2">Docker</h3>
-                    <p class="text-xs text-slate-500 uppercase tracking-widest">Multi-stage Builds</p>
-                </div>
-                <div class="cyber-card p-10 rounded-2xl text-center reveal">
-                    <i class="fas fa-code-branch text-5xl text-emerald-400 mb-6 float" style="animation-delay: 1.5s"></i>
-                    <h3 class="text-xl font-bold mb-2">Terraform</h3>
-                    <p class="text-xs text-slate-500 uppercase tracking-widest">State Management</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="logs" class="py-32 px-6">
-        <div class="max-w-4xl mx-auto">
-            <h2 class="text-4xl font-bold mb-16 flex items-center">
-                <span class="text-cyan-400 mr-4">/</span> Deployment Logs
-            </h2>
-            
-            <div class="space-y-20">
-                <div class="relative pl-12 reveal">
-                    <div class="absolute left-0 top-0 w-1 h-full bg-gradient-to-b from-cyan-400 to-transparent"></div>
-                    <div class="absolute left-[-8px] top-0 w-5 h-5 bg-cyan-400 rounded-full border-4 border-slate-900"></div>
-                    <span class="mono text-cyan-400 text-sm font-bold uppercase tracking-widest">June 2025 — August 2025</span>
-                    <h3 class="text-3xl font-bold mt-2">Cloud Computing Intern</h3>
-                    <p class="text-slate-400 font-bold mb-6">Arrow Technologies & Solutions</p>
-                    <div class="grid gap-4">
-                        <div class="cyber-card p-4 rounded-lg bg-slate-900/40 text-sm text-slate-300 border-l-4 border-cyan-400">
-                            Provisioned production EC2 environments with least-privilege IAM hardening.
-                        </div>
-                        <div class="cyber-card p-4 rounded-lg bg-slate-900/40 text-sm text-slate-300 border-l-4 border-purple-400">
-                            Eliminated SSH vulnerabilities via AWS Session Manager implementation.
-                        </div>
+                <div class="p-6 mono text-sm leading-relaxed">
+                    <div class="mb-2 text-green-400">➜ ~ <span class="text-white">fetch-profile --user shubham</span></div>
+                    <div class="text-slate-400">Loading profile data... [OK]</div>
+                    <div class="grid grid-cols-1 gap-2 mt-4">
+                        <div class="flex justify-between"><span class="text-sky-400">Role:</span> <span>DevOps Intern</span></div>
+                        <div class="flex justify-between"><span class="text-sky-400">Education:</span> <span>B.E. Computer Eng.</span></div>
+                        <div class="flex justify-between"><span class="text-sky-400">Location:</span> <span>India / Remote</span></div>
+                        <div class="flex justify-between"><span class="text-sky-400">Status:</span> <span class="animate-pulse text-green-500">● Active</span></div>
+                    </div>
+                    <div class="mt-6 text-green-400">➜ ~ <span class="text-white">skills --list</span></div>
+                    <div class="mt-1 text-slate-300">
+                        [ "AWS", "Docker", "K8s", "Terraform", "Jenkins", "ArgoCD" ]
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <footer class="py-20 border-t border-white/5 text-center">
-        <div class="flex justify-center space-x-8 mb-8">
-            <a href="#" class="text-2xl text-slate-500 hover:text-cyan-400 transition-all transform hover:scale-125"><i class="fab fa-github"></i></a>
-            <a href="#" class="text-2xl text-slate-500 hover:text-cyan-400 transition-all transform hover:scale-125"><i class="fab fa-linkedin"></i></a>
-            <a href="#" class="text-2xl text-slate-500 hover:text-cyan-400 transition-all transform hover:scale-125"><i class="fas fa-terminal"></i></a>
+    <section id="projects" class="py-32 px-6">
+        <div class="container mx-auto max-w-6xl">
+            <h2 class="text-4xl font-bold mb-2">Selected Deployments</h2>
+            <p class="text-slate-500 mb-16 mono">/var/www/portfolio/projects</p>
+
+            <div class="grid md:grid-cols-2 gap-10">
+                <div class="glass-card p-8 rounded-2xl reveal">
+                    <div class="flex justify-between items-start mb-6">
+                        <i class="fas fa-network-wired text-4xl text-sky-400"></i>
+                        <span class="text-[10px] mono border border-slate-700 px-2 py-1 rounded">2025</span>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3">FlowBoard Platform</h3>
+                    <p class="text-slate-400 mb-6 text-sm leading-relaxed">
+                        Full-cycle DevOps implementation using Kubernetes and GitOps. Integrated SAST (SonarQube) and automated image scanning with Trivy.
+                    </p>
+                    <div class="flex flex-wrap gap-2 mb-6">
+                        <span class="text-[10px] bg-sky-500/10 text-sky-400 px-2 py-1 rounded mono">ArgoCD</span>
+                        <span class="text-[10px] bg-sky-500/10 text-sky-400 px-2 py-1 rounded mono">Prometheus</span>
+                        <span class="text-[10px] bg-sky-500/10 text-sky-400 px-2 py-1 rounded mono">EKS</span>
+                    </div>
+                    <a href="#" class="text-sky-400 text-sm font-bold hover:underline">Inspect Architecture →</a>
+                </div>
+
+                <div class="glass-card p-8 rounded-2xl reveal">
+                    <div class="flex justify-between items-start mb-6">
+                        <i class="fas fa-cloud-arrow-up text-4xl text-indigo-400"></i>
+                        <span class="text-[10px] mono border border-slate-700 px-2 py-1 rounded">2025</span>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3">NimbusDeploy</h3>
+                    <p class="text-slate-400 mb-6 text-sm leading-relaxed">
+                        Static site delivery system optimized for global latency using CloudFront and S3, provisioned entirely via Terraform IaC.
+                    </p>
+                    <div class="flex flex-wrap gap-2 mb-6">
+                        <span class="text-[10px] bg-indigo-500/10 text-indigo-400 px-2 py-1 rounded mono">Terraform</span>
+                        <span class="text-[10px] bg-indigo-500/10 text-indigo-400 px-2 py-1 rounded mono">GitHub Actions</span>
+                        <span class="text-[10px] bg-indigo-500/10 text-indigo-400 px-2 py-1 rounded mono">Route53</span>
+                    </div>
+                    <a href="#" class="text-indigo-400 text-sm font-bold hover:underline">View Live Site →</a>
+                </div>
+            </div>
         </div>
-        <p class="text-slate-600 mono text-xs uppercase tracking-widest">
-            Hand-coded in 2026 // Distributed via AWS S3 & CloudFront
-        </p>
+    </section>
+
+    <section id="skills" class="py-32 bg-slate-900/20 px-6">
+        <div class="container mx-auto max-w-4xl text-center">
+            <h2 class="text-3xl font-bold mb-16">Tech Proficiency Matrix</h2>
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-8">
+                <div class="glass-card p-6 rounded-xl reveal">
+                    <div class="text-slate-500 text-xs mb-2 mono">INFRASTRUCTURE</div>
+                    <div class="text-xl font-bold">AWS Ecosystem</div>
+                    <div class="w-full bg-slate-800 h-1.5 mt-4 rounded-full overflow-hidden">
+                        <div class="bg-sky-500 h-full w-[90%]"></div>
+                    </div>
+                </div>
+                <div class="glass-card p-6 rounded-xl reveal">
+                    <div class="text-slate-500 text-xs mb-2 mono">CONTAINERS</div>
+                    <div class="text-xl font-bold">K8s & Docker</div>
+                    <div class="w-full bg-slate-800 h-1.5 mt-4 rounded-full overflow-hidden">
+                        <div class="bg-sky-500 h-full w-[85%]"></div>
+                    </div>
+                </div>
+                <div class="glass-card p-6 rounded-xl reveal">
+                    <div class="text-slate-500 text-xs mb-2 mono">AUTOMATION</div>
+                    <div class="text-xl font-bold">CI/CD Pipelines</div>
+                    <div class="w-full bg-slate-800 h-1.5 mt-4 rounded-full overflow-hidden">
+                        <div class="bg-sky-500 h-full w-[88%]"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="py-20 text-center border-t border-slate-900">
+        <div class="mono text-xs text-slate-500 mb-4 tracking-widest">SYSTEM_STATUS: STABLE</div>
+        <p class="text-slate-400">© 2026 Designed & Engineered by Shubham Mali</p>
     </footer>
 
     <script>
-        // Terminal Typing Animation
-        const terminalText = [
-            { t: "Starting cloud session...", c: "text-slate-400" },
-            { t: "> whoami", c: "text-cyan-400" },
-            { t: "Shubham Mali", c: "text-white" },
-            { t: "> locate --expertise", c: "text-cyan-400" },
-            { t: "Scanning repositories...", c: "text-slate-400" },
-            { t: "Found: AWS, Kubernetes, Terraform, GitOps", c: "text-green-400" },
-            { t: "> systemctl status motivation", c: "text-cyan-400" },
-            { t: "● status: operational (100%)", c: "text-emerald-500" },
-            { t: "Ready for deployment.", c: "text-white font-bold animate-pulse" }
-        ];
+        // Mouse Move Mesh Effect
+        const mesh = document.getElementById('mesh');
+        document.addEventListener('mousemove', (e) => {
+            const x = (e.clientX / window.innerWidth) * 100;
+            const y = (e.clientY / window.innerHeight) * 100;
+            mesh.style.background = `radial-gradient(circle at ${x}% ${y}%, rgba(58, 123, 213, 0.15) 0%, transparent 50%)`;
+        });
 
-        const terminalBody = document.getElementById('terminal-body');
-        let i = 0;
-
-        function typeLine() {
-            if (i < terminalText.length) {
-                const line = document.createElement('div');
-                line.className = `mb-2 ${terminalText[i].c}`;
-                line.innerHTML = terminalText[i].t;
-                terminalBody.appendChild(line);
-                i++;
-                setTimeout(typeLine, 800);
+        // Scroll Reveal Animation
+        function reveal() {
+            var reveals = document.querySelectorAll(".reveal");
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                var elementVisible = 150;
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add("active");
+                }
             }
         }
-        
-        // Trigger Terminal
-        setTimeout(typeLine, 1000);
+        window.addEventListener("scroll", reveal);
 
-        // Scroll Reveal Implementation
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, { threshold: 0.1 });
-
-        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-        // Smooth Mouse Follow (Glow Effect)
-        document.addEventListener('mousemove', (e) => {
-            const glow = document.querySelector('.glow-sphere');
-            glow.style.left = (e.clientX - 200) + 'px';
-            glow.style.top = (e.clientY - 200) + 'px';
-        });
+        // Initial check for elements in view
+        reveal();
     </script>
 </body>
 </html>
